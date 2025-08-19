@@ -1,0 +1,462 @@
+/* Custom CSS */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+* {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.font-light {
+    font-weight: 300;
+}
+
+/* Smooth hover transitions */
+a, button {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Corporate color palette from institutional colors */
+:root {
+    /* Dark theme colors */
+    --primary-dark: #001826;
+    --secondary-dark: #032340;
+    --tertiary-dark: #033159;
+    --primary-blue: #588ad6;
+    --light-gray: #f4f4f4;
+    --medium-gray: #e0e0e0;
+    --dark-gray: #666666;
+    --navy-shadow: rgba(0, 24, 38, 0.8);
+    --blue-tint: rgba(88, 138, 214, 0.1);
+    --blue-hover: rgba(88, 138, 214, 0.2);
+    
+    /* Dynamic theme variables */
+    --bg-primary: var(--primary-dark);
+    --bg-secondary: var(--secondary-dark);
+    --bg-tertiary: var(--tertiary-dark);
+    --text-primary: var(--light-gray);
+    --text-secondary: var(--medium-gray);
+    --text-muted: var(--dark-gray);
+    --shadow-color: var(--navy-shadow);
+    --accent-bg: var(--blue-tint);
+    --accent-hover: var(--blue-hover);
+}
+
+/* Light theme colors */
+:root[data-theme="light"] {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #e9ecef;
+    --text-primary: #001826;
+    --text-secondary: #032340;
+    --text-muted: #495057;
+    --shadow-color: rgba(0, 24, 38, 0.15);
+    --accent-bg: rgba(88, 138, 214, 0.1);
+    --accent-hover: rgba(88, 138, 214, 0.2);
+}
+
+.text-brand-blue {
+    color: var(--primary-blue);
+}
+
+
+.text-light-gray {
+    color: var(--text-primary);
+}
+
+.text-medium-gray {
+    color: var(--text-secondary);
+}
+
+.text-dark-gray {
+    color: var(--text-muted);
+}
+
+.bg-primary-dark {
+    background-color: var(--bg-primary);
+}
+
+.bg-secondary-dark {
+    background-color: var(--bg-secondary);
+}
+
+.bg-tertiary-dark {
+    background-color: var(--bg-tertiary);
+}
+
+/* Progress bars background for better visibility */
+:root[data-theme="light"] .bg-tertiary-dark {
+    background-color: #dee2e6 !important;
+}
+
+.border-brand-blue {
+    border-color: var(--primary-blue);
+}
+
+/* Override Tailwind defaults for new theme */
+.text-gray-900 {
+    color: var(--text-primary) !important;
+}
+
+.text-gray-600 {
+    color: var(--text-secondary) !important;
+}
+
+.text-gray-500 {
+    color: var(--text-muted) !important;
+}
+
+.bg-gray-50 {
+    background-color: var(--bg-secondary) !important;
+}
+
+.bg-blue-50 {
+    background-color: var(--accent-bg) !important;
+}
+
+.bg-blue-600 {
+    background-color: var(--primary-blue) !important;
+}
+
+
+/* Navigation */
+nav {
+    background-color: transparent !important;
+}
+
+/* Custom animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Section numbering */
+.section-heading {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin: 10px 0 40px;
+    width: 100%;
+    font-size: clamp(26px, 5vw, 32px);
+}
+
+.section-heading::before {
+    content: attr(data-number);
+    margin-right: 10px;
+    color: var(--primary-blue);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(14px, 3vw, 20px);
+    font-weight: 400;
+}
+
+.section-heading::after {
+    content: '';
+    display: block;
+    position: relative;
+    top: -5px;
+    width: 300px;
+    height: 1px;
+    margin-left: 20px;
+    background-color: var(--text-muted);
+    opacity: 0.6;
+}
+
+/* Mobile menu styles */
+#mobile-menu {
+    transition: all 0.3s ease;
+    background-color: var(--bg-secondary) !important;
+}
+
+#mobile-menu.show {
+    display: block;
+}
+
+/* Project hover effects */
+.project-card {
+    transition: all 0.3s ease;
+    padding: 2rem;
+    background-color: var(--bg-secondary);
+    border-radius: 4px;
+    border: 1px solid var(--bg-tertiary);
+}
+
+.project-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 20px 30px -15px var(--shadow-color);
+}
+
+/* Skills progress bars */
+.skill-bar {
+    transition: width 1s ease-in-out;
+}
+
+/* Tech tags */
+.tech-tag {
+    color: var(--primary-blue) !important;
+    background-color: var(--accent-bg) !important;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    border-radius: 3px;
+}
+
+/* Contact form styles */
+.form-input {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: var(--bg-secondary) !important;
+    border: 1px solid var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary-blue) !important;
+    box-shadow: 0 0 0 3px var(--accent-bg) !important;
+}
+
+/* Button styles */
+.btn-outline {
+    color: var(--primary-blue);
+    background-color: transparent;
+    border: 1px solid var(--primary-blue);
+    border-radius: 4px;
+    padding: 0.75rem 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.btn-outline:hover {
+    background-color: var(--accent-hover);
+    outline: none;
+    transform: translate(-4px, -4px);
+    box-shadow: 4px 4px 0px var(--primary-blue);
+}
+
+/* Fixed sidebars */
+.vertical-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+}
+
+/* Fixed social and email sidebars hover effects */
+.fixed a:hover {
+    color: var(--primary-blue);
+}
+
+/* Sidebar vertical line */
+.sidebar-line {
+    background-color: rgba(136, 146, 176, 0.4);
+    width: 1px;
+    height: 128px;
+}
+
+/* Ensure content doesn't overlap with fixed sidebars */
+@media (min-width: 1024px) {
+    main {
+        margin-left: 60px;
+        margin-right: 60px;
+    }
+}
+
+/* Popup styles */
+.footer-popup, .sidebar-popup {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 32px;
+    background: var(--bg-secondary);
+    color: var(--primary-blue);
+    padding: 6px 18px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-family: 'JetBrains Mono', monospace;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    z-index: 9999;
+    opacity: 0.98;
+    border: 1px solid var(--primary-blue);
+    letter-spacing: 0.04em;
+    font-weight: 500;
+    transition: opacity 0.3s;
+}
+
+.sidebar-popup {
+    left: auto;
+    right: 60px;
+    bottom: 80px;
+    transform: none;
+}
+
+/* Theme toggle button - Minimalistic design on right side */
+.theme-toggle {
+    position: fixed;
+    top: 80px;
+    right: 25px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: var(--text-secondary);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 1000;
+    font-size: 18px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle:hover {
+    background-color: rgba(88, 138, 214, 0.15);
+    color: var(--primary-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(88, 138, 214, 0.2);
+}
+
+.theme-toggle:active {
+    transform: translateY(0);
+    transition: all 0.1s ease;
+}
+
+/* Theme transition for all elements */
+* {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light theme specific overrides for better contrast */
+:root[data-theme="light"] .sidebar-line {
+    background-color: rgba(0, 24, 38, 0.3);
+}
+
+:root[data-theme="light"] h1,
+:root[data-theme="light"] h2,
+:root[data-theme="light"] h3,
+:root[data-theme="light"] h4,
+:root[data-theme="light"] h5,
+:root[data-theme="light"] h6 {
+    color: var(--text-primary) !important;
+}
+
+:root[data-theme="light"] p {
+    color: var(--text-secondary) !important;
+}
+
+/* About section specific overrides for light theme */
+:root[data-theme="light"] #about .text-light-gray {
+    color: var(--text-primary) !important;
+}
+
+:root[data-theme="light"] #about .text-secondary {
+    color: var(--text-secondary) !important;
+}
+
+:root[data-theme="light"] #about .border-tertiary-dark {
+    border-color: var(--bg-tertiary) !important;
+}
+
+/* About section specific overrides for dark theme */
+:root[data-theme="dark"] #about,
+:root:not([data-theme="light"]) #about {
+    background-color: rgba(3, 49, 89, 0.3) !important;
+    border-color: rgba(136, 146, 176, 0.2) !important;
+}
+
+/* Section heading lines - better visibility */
+:root[data-theme="light"] .section-heading::after {
+    background-color: var(--text-primary) !important;
+    opacity: 0.5 !important;
+}
+
+:root[data-theme="dark"] .section-heading::after,
+:root:not([data-theme="light"]) .section-heading::after {
+    background-color: var(--text-secondary) !important;
+    opacity: 0.8 !important;
+}
+
+/* Subtle improvements for line visibility */
+:root[data-theme="light"] .sidebar-line {
+    background-color: rgba(0, 24, 38, 0.4) !important;
+}
+
+:root[data-theme="dark"] .sidebar-line,
+:root:not([data-theme="light"]) .sidebar-line {
+    background-color: rgba(136, 146, 176, 0.6) !important;
+}
+
+/* Experience timeline borders - better visibility */
+:root[data-theme="light"] .border-tertiary-dark {
+    border-color: rgba(0, 24, 38, 0.3) !important;
+}
+
+:root[data-theme="dark"] .border-tertiary-dark,
+:root:not([data-theme="light"]) .border-tertiary-dark {
+    border-color: rgba(136, 146, 176, 0.5) !important;
+}
+
+/* Project separator lines - better visibility */
+:root[data-theme="light"] .border-gray-100 {
+    border-color: rgba(0, 24, 38, 0.15) !important;
+}
+
+:root[data-theme="dark"] .border-gray-100,
+:root:not([data-theme="light"]) .border-gray-100 {
+    border-color: rgba(136, 146, 176, 0.3) !important;
+}
+
+/* Responsive theme toggle */
+@media (max-width: 768px) {
+    .theme-toggle {
+        top: 70px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .theme-toggle {
+        top: 90px;
+        right: 30px;
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+    }
+}

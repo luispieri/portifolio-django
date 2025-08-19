@@ -1,0 +1,20 @@
+{
+  "_comment": "Configuração do Vercel para deploy automático",
+  "_description": "Este arquivo diz ao Vercel como fazer deploy da aplicação Django",
+  
+  "builds": [
+    {
+      "_comment": "Como construir a aplicação",
+      "src": "wsgi.py",
+      "use": "@vercel/python"
+    }
+  ],
+  
+  "routes": [
+    {
+      "_comment": "Todas as URLs vão para o Django via wsgi.py",
+      "src": "/(.*)",
+      "dest": "wsgi.py"
+    }
+  ]
+}
