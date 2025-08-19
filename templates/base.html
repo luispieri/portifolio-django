@@ -68,9 +68,9 @@ Todos os outros templates herdam desta base.
                 <div class="relative ml-4">
                     {% get_current_language as CURRENT_LANG %}
                     {% if CURRENT_LANG == 'en' %}
-                        <a href="{% url 'set_language' %}?language=pt-br" class="text-light-gray hover:text-brand-blue transition-colors font-mono text-sm border border-light-gray rounded px-2 py-1">🇧🇷 Português</a>
+                        <a href="#" onclick="switchLanguage('pt-br')" class="text-light-gray hover:text-brand-blue transition-colors font-mono text-sm border border-light-gray rounded px-2 py-1">🇧🇷 Português</a>
                     {% else %}
-                        <a href="{% url 'set_language' %}?language=en" class="text-light-gray hover:text-brand-blue transition-colors font-mono text-sm border border-light-gray rounded px-2 py-1">🇺🇸 English</a>
+                        <a href="#" onclick="switchLanguage('en')" class="text-light-gray hover:text-brand-blue transition-colors font-mono text-sm border border-light-gray rounded px-2 py-1">🇺🇸 English</a>
                     {% endif %}
                 </div>
             </div>
@@ -104,9 +104,9 @@ Todos os outros templates herdam desta base.
                 <div class="mt-4">
                     {% get_current_language as CURRENT_LANG %}
                     {% if CURRENT_LANG == 'en' %}
-                        <a href="{% url 'set_language' %}?language=pt-br" class="block text-light-gray hover:text-brand-blue transition-colors font-mono text-sm border border-light-gray rounded px-2 py-1 text-center">🇧🇷 Português</a>
+                        <a href="#" onclick="switchLanguage('pt-br')" class="block text-light-gray hover:text-brand-blue transition-colors font-mono text-sm border border-light-gray rounded px-2 py-1 text-center">🇧🇷 Português</a>
                     {% else %}
-                        <a href="{% url 'set_language' %}?language=en" class="block text-light-gray hover:text-brand-blue transition-colors font-mono text-sm border border-light-gray rounded px-2 py-1 text-center">🇺🇸 English</a>
+                        <a href="#" onclick="switchLanguage('en')" class="block text-light-gray hover:text-brand-blue transition-colors font-mono text-sm border border-light-gray rounded px-2 py-1 text-center">🇺🇸 English</a>
                     {% endif %}
                 </div>
             </div>
@@ -194,6 +194,38 @@ Todos os outros templates herdam desta base.
     </footer>
 
     <!-- JavaScript -->
+    <script>
+        // Função para trocar idioma (compatível com Vercel)
+        function switchLanguage(language) {
+            const currentPath = window.location.pathname;
+            let newPath;
+            
+            if (language === 'en') {
+                // Mudando para inglês
+                if (currentPath.startsWith('/en/')) {
+                    return; // Já está em inglês
+                } else if (currentPath === '/') {
+                    newPath = '/en/';
+                } else {
+                    newPath = '/en' + currentPath;
+                }
+            } else {
+                // Mudando para português
+                if (currentPath.startsWith('/en/')) {
+                    newPath = currentPath.substring(3); // Remove '/en'
+                    if (newPath === '') newPath = '/';
+                } else {
+                    return; // Já está em português
+                }
+            }
+            
+            // Salva preferência de idioma
+            localStorage.setItem('preferred_language', language);
+            
+            // Redireciona
+            window.location.href = newPath;
+        }
+    </script>
     <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
