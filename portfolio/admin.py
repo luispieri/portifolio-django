@@ -28,6 +28,11 @@ class ProjectAdmin(admin.ModelAdmin):
         ('Informações Básicas', {
             'fields': ('title', 'description', 'year', 'status')
         }),
+        ('Traduções (Inglês)', {
+            'fields': ('title_en', 'description_en'),
+            'classes': ('collapse',),
+            'description': 'Preencha para disponibilizar o projeto em inglês'
+        }),
         ('Detalhes Técnicos', {
             'fields': ('technologies', 'project_url', 'github_url', 'image')
         }),

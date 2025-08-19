@@ -14,6 +14,8 @@ Todos os outros templates herdam desta base.
 -->
 
 {% load static %}
+{% load i18n %}
+{% load custom_i18n %}
 <!DOCTYPE html>
 <html lang="pt-br"> <!-- Idioma português brasileiro -->
 <head>
@@ -49,18 +51,28 @@ Todos os outros templates herdam desta base.
             </div>
             <div class="hidden md:flex items-center space-x-10">
                 <a href="{% url 'portfolio:home' %}#work" class="text-light-gray hover:text-brand-blue transition-colors font-mono text-sm">
-                    <span class="text-brand-blue text-xs mr-2">01.</span>Portfólio
+                    <span class="text-brand-blue text-xs mr-2">01.</span>{% custom_trans "Portfólio" %}
                 </a>
                 <a href="{% url 'portfolio:home' %}#about" class="text-light-gray hover:text-brand-blue transition-colors font-mono text-sm">
-                    <span class="text-brand-blue text-xs mr-2">02.</span>Sobre
+                    <span class="text-brand-blue text-xs mr-2">02.</span>{% custom_trans "Sobre" %}
                 </a>
                 <a href="{% url 'portfolio:home' %}#skills" class="text-light-gray hover:text-brand-blue transition-colors font-mono text-sm">
-                    <span class="text-brand-blue text-xs mr-2">03.</span>Habilidades
+                    <span class="text-brand-blue text-xs mr-2">03.</span>{% custom_trans "Habilidades" %}
                 </a>
                 <a href="{% url 'portfolio:contact' %}" class="text-light-gray hover:text-brand-blue transition-colors font-mono text-sm">
-                    <span class="text-brand-blue text-xs mr-2">04.</span>Contato
+                    <span class="text-brand-blue text-xs mr-2">04.</span>{% custom_trans "Contato" %}
                 </a>
-                <a href="https://cv.pieritech.com.br/" target="_blank" class="btn-outline ml-4">Currículo</a>
+                <a href="https://cv.pieritech.com.br/" target="_blank" class="btn-outline ml-4">{% custom_trans "Currículo" %}</a>
+                
+                <!-- Language Toggle -->
+                <div class="relative ml-4">
+                    {% get_current_language as CURRENT_LANG %}
+                    {% if CURRENT_LANG == 'en' %}
+                        <a href="{% url 'set_language' %}?language=pt-br" class="text-light-gray hover:text-brand-blue transition-colors font-mono text-sm border border-light-gray rounded px-2 py-1">🇧🇷 Português</a>
+                    {% else %}
+                        <a href="{% url 'set_language' %}?language=en" class="text-light-gray hover:text-brand-blue transition-colors font-mono text-sm border border-light-gray rounded px-2 py-1">🇺🇸 English</a>
+                    {% endif %}
+                </div>
             </div>
             
             <!-- Mobile Menu Button -->
@@ -75,18 +87,28 @@ Todos os outros templates herdam desta base.
         <div class="md:hidden hidden" id="mobile-menu">
             <div class="px-6 py-3 space-y-3">
                 <a href="{% url 'portfolio:home' %}#work" class="block text-medium-gray hover:text-brand-blue">
-                    <span class="text-brand-blue font-mono text-xs mr-2">01.</span>Portfólio
+                    <span class="text-brand-blue font-mono text-xs mr-2">01.</span>{% custom_trans "Portfólio" %}
                 </a>
                 <a href="{% url 'portfolio:home' %}#about" class="block text-medium-gray hover:text-brand-blue">
-                    <span class="text-brand-blue font-mono text-xs mr-2">02.</span>Sobre
+                    <span class="text-brand-blue font-mono text-xs mr-2">02.</span>{% custom_trans "Sobre" %}
                 </a>
                 <a href="{% url 'portfolio:home' %}#skills" class="block text-medium-gray hover:text-brand-blue">
-                    <span class="text-brand-blue font-mono text-xs mr-2">03.</span>Habilidades
+                    <span class="text-brand-blue font-mono text-xs mr-2">03.</span>{% custom_trans "Habilidades" %}
                 </a>
                 <a href="{% url 'portfolio:contact' %}" class="block text-medium-gray hover:text-brand-blue">
-                    <span class="text-brand-blue font-mono text-xs mr-2">04.</span>Contato
+                    <span class="text-brand-blue font-mono text-xs mr-2">04.</span>{% custom_trans "Contato" %}
                 </a>
-                <a href="https://cv.pieritech.com.br/" target="_blank" class="btn-outline text-xs py-2 px-4 inline-block mt-4">Currículo</a>
+                <a href="https://cv.pieritech.com.br/" target="_blank" class="btn-outline text-xs py-2 px-4 inline-block mt-4">{% custom_trans "Currículo" %}</a>
+                
+                <!-- Mobile Language Toggle -->
+                <div class="mt-4">
+                    {% get_current_language as CURRENT_LANG %}
+                    {% if CURRENT_LANG == 'en' %}
+                        <a href="{% url 'set_language' %}?language=pt-br" class="block text-light-gray hover:text-brand-blue transition-colors font-mono text-sm border border-light-gray rounded px-2 py-1 text-center">🇧🇷 Português</a>
+                    {% else %}
+                        <a href="{% url 'set_language' %}?language=en" class="block text-light-gray hover:text-brand-blue transition-colors font-mono text-sm border border-light-gray rounded px-2 py-1 text-center">🇺🇸 English</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </nav>
@@ -143,7 +165,7 @@ Todos os outros templates herdam desta base.
     <footer class="py-12 px-6">
         <div class="max-w-6xl mx-auto text-center">
             <div class="text-sm text-slate mb-4">
-                Projetado e Desenvolvido por Luis Pieri
+                {% custom_trans "Projetado e Desenvolvido por Luis Pieri" %}
             </div>
             <div class="flex justify-center space-x-4 mb-4">
                 <a href="https://github.com/luispieri" target="_blank" class="text-dark-gray hover:text-brand-blue transition-colors">

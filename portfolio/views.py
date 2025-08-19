@@ -39,8 +39,8 @@ def home(request):
     # Busca as informações de contato (deve existir apenas um registro)
     contact_info = ContactInfo.objects.first()
     
-    # Busca projetos marcados como "featured" (em destaque) - máx. 3
-    featured_projects = Project.objects.filter(featured=True)[:3]
+    # Busca projetos marcados como "featured" (em destaque) - máx. 3, ordenados
+    featured_projects = Project.objects.filter(featured=True).order_by('order')[:3]
     
     # Busca todos os projetos mais recentes - máx. 6
     recent_projects = Project.objects.all()[:6]
@@ -133,7 +133,63 @@ Esta mensagem foi enviada através do formulário de contato do seu portfólio.
     }
     return render(request, 'portfolio/contact.html', context)
 
+def set_language(request):
+    """
+    View para alternar idioma
+    """
+    language = request.GET.get('language', 'pt-br')
+    
+    if language not in ['pt-br', 'en']:
+        language = 'pt-br'
+    
+    # Pegar URL de origem do referer
+    referer = request.META.get('HTTP_REFERER', '/')
+    
+    # Parse da URL para extrair apenas o path
+    from urllib.parse import urlparse
+    parsed = urlparse(referer)
+    current_path = parsed.path
+    
+    print(f"[SET_LANGUAGE] Language: {language}, Current path: {current_path}")
+    
+    # Determinar o path base (sem prefixo de idioma)
+    base_path = current_path
+    if base_path.startswith('/en/'):
+        base_path = base_path[3:]  # Remove '/en'
+    elif base_path == '/en':
+        base_path = '/'
+    
+    # Se está vindo de set-language, ir para home
+    if 'set-language' in base_path:
+        base_path = '/'
+    
+    print(f"[SET_LANGUAGE] Base path: {base_path}")
+    
+    # Construir URL de destino
+    if language == 'en':
+        if base_path == '/' or base_path == '':
+            destination = '/en/'
+        else:
+            destination = f'/en{base_path}'
+    else:  # pt-br
+        destination = base_path if base_path else '/'
+    
+    print(f"[SET_LANGUAGE] Destination: {destination}")
+    
+    # Ativar idioma e criar response
+    translation.activate(language)
+    response = HttpResponseRedirect(destination)
+    
+    # Salvar preferência de idioma
+    response.set_cookie('django_language', language, max_age=30*24*60*60)
+    request.session['django_language'] = language
+    
+    return response
+
 from django.views.decorators.http import require_http_methods
+from django.utils import translation
+from django.http import HttpResponseRedirect
+from django.urls import translate_url
 
 @require_http_methods(["GET"])
 def healthy(request):

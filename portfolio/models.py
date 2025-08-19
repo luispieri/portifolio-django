@@ -94,9 +94,22 @@ class Project(models.Model):
         help_text="Nome do seu projeto (ex: E-commerce de Roupas)"
     )
     
+    # Título em inglês
+    title_en = models.CharField(
+        max_length=200,
+        blank=True,
+        help_text="Nome do projeto em inglês (deixe vazio para usar o título padrão)"
+    )
+    
     # Descrição detalhada do projeto
     description = models.TextField(
         help_text="Explique o que o projeto faz, qual problema resolve, etc."
+    )
+    
+    # Descrição em inglês
+    description_en = models.TextField(
+        blank=True,
+        help_text="Descrição do projeto em inglês (deixe vazio para usar a descrição padrão)"
     )
     
     # Ano que o projeto foi criado/concluído
@@ -180,6 +193,22 @@ class Project(models.Model):
         Por exemplo: "Python, Django, React" -> ["Python", "Django", "React"]
         """
         return [tech.strip() for tech in self.technologies.split(',') if tech.strip()]
+    
+    def get_title(self, language='pt-br'):
+        """
+        Retorna o título no idioma especificado
+        """
+        if language == 'en' and self.title_en:
+            return self.title_en
+        return self.title
+    
+    def get_description(self, language='pt-br'):
+        """
+        Retorna a descrição no idioma especificado
+        """
+        if language == 'en' and self.description_en:
+            return self.description_en
+        return self.description
 
 class Experience(models.Model):
     company = models.CharField(max_length=200)
