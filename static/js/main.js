@@ -228,4 +228,74 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // ===============================================
+    // SISTEMA DE TROCA DE IDIOMA (CLIENT-SIDE)
+    // ===============================================
+    
+    // Adiciona funcionalidade aos links de troca de idioma
+    document.querySelectorAll('a[href*="set-language"]').forEach(languageLink => {
+        languageLink.addEventListener('click', function(e) {
+            e.preventDefault(); // Impede navegação normal
+            
+            // Extrai o idioma da URL
+            const url = new URL(this.href);
+            const language = url.searchParams.get('language');
+            const currentPath = window.location.pathname;
+            
+            console.log(`🌍 Mudando idioma para: ${language}, Path atual: ${currentPath}`);
+            
+            // Determina nova URL baseada no idioma
+            let newPath;
+            
+            if (language === 'en') {
+                // Mudando para inglês
+                if (currentPath.startsWith('/en/')) {
+                    newPath = currentPath; // Já está em inglês
+                } else if (currentPath === '/') {
+                    newPath = '/en/';
+                } else {
+                    newPath = '/en' + currentPath;
+                }
+            } else {
+                // Mudando para português
+                if (currentPath.startsWith('/en/')) {
+                    newPath = currentPath.substring(3); // Remove '/en'
+                    if (newPath === '') newPath = '/';
+                } else {
+                    newPath = currentPath; // Já está em português
+                }
+            }
+            
+            // Salva preferência de idioma
+            localStorage.setItem('preferred_language', language);
+            
+            console.log(`🔄 Redirecionando para: ${newPath}`);
+            
+            // Redireciona para nova URL
+            window.location.href = newPath;
+        });
+    });
+    
+    // Aplica idioma preferido ao carregar a página
+    const preferredLanguage = localStorage.getItem('preferred_language');
+    const currentPath = window.location.pathname;
+    
+    if (preferredLanguage === 'en' && !currentPath.startsWith('/en/') && currentPath !== '/en') {
+        // Usuário prefere inglês mas está em português
+        let englishPath;
+        if (currentPath === '/') {
+            englishPath = '/en/';
+        } else {
+            englishPath = '/en' + currentPath;
+        }
+        console.log(`🌍 Auto-redirect para inglês: ${englishPath}`);
+        window.location.href = englishPath;
+    } else if (preferredLanguage === 'pt-br' && currentPath.startsWith('/en/')) {
+        // Usuário prefere português mas está em inglês
+        let portuguesePath = currentPath.substring(3);
+        if (portuguesePath === '') portuguesePath = '/';
+        console.log(`🌍 Auto-redirect para português: ${portuguesePath}`);
+        window.location.href = portuguesePath;
+    }
 });
