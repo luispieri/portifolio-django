@@ -1,0 +1,17 @@
+# ===============================================
+# DEPENDÊNCIAS DO PORTFOLIO DJANGO
+# ===============================================
+# Este arquivo lista todas as bibliotecas Python necessárias
+# Para instalar: pip install -r requirements.txt
+
+# Framework web principal - versão estável e segura
+Django==4.2.16
+
+# Para processar e redimensionar imagens enviadas pelos usuários
+Pillow==10.4.0
+
+# Para gerenciar variáveis de ambiente (senhas, chaves, etc.)
+python-decouple==3.8
+
+# Para servir arquivos CSS, JS e imagens em produção
+whitenoise==6.7.0
