@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',        # Segurança (HTTPS, etc.)
     'django.contrib.sessions.middleware.SessionMiddleware', # Gerencia sessões
+    'django.middleware.locale.LocaleMiddleware',            # Middleware para idiomas
     'django.middleware.common.CommonMiddleware',            # Funcionalidades comuns
     'django.middleware.csrf.CsrfViewMiddleware',           # Proteção contra CSRF
     'django.contrib.auth.middleware.AuthenticationMiddleware', # Autenticação de usuários
@@ -76,8 +77,10 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',    # Informações de debug
                 'django.template.context_processors.request',  # Objeto request
+                'django.template.context_processors.i18n',     # Informações de idioma
                 'django.contrib.auth.context_processors.auth', # Usuário logado
                 'django.contrib.messages.context_processors.messages', # Mensagens
+                'portfolio.context_processors.translation_processor', # Tradução customizada
             ],
         },
     },
@@ -119,6 +122,17 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Idioma do projeto (português do Brasil)
 LANGUAGE_CODE = 'pt-br'
+
+# Idiomas disponíveis
+LANGUAGES = [
+    ('pt-br', 'Português'),
+    ('en', 'English'),
+]
+
+# Diretório para arquivos de tradução
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
 
 # Fuso horário (Brasília)
 TIME_ZONE = 'America/Sao_Paulo'

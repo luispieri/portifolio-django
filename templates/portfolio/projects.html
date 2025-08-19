@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_i18n %}
 
-{% block title %}Projetos - Portfolio{% endblock %}
+{% block title %}{% custom_trans "Projetos - Portfolio" %}{% endblock %}
 
 {% block content %}
 <section class="py-24 px-6 pt-32">
@@ -13,15 +14,14 @@
                 <svg class="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                 </svg>
-                Voltar aos projetos
+                {% custom_trans "Voltar aos projetos" %}
             </a>
         </div>
 
         <div class="mb-16">
-            <h1 class="text-4xl md:text-6xl font-light mb-6">Todos os Projetos</h1>
+            <h1 class="text-4xl md:text-6xl font-light mb-6">{% custom_trans "Todos os Projetos" %}</h1>
             <p class="text-xl text-gray-600 max-w-3xl">
-                Uma visão completa do meu trabalho, incluindo aplicações web, 
-                sistemas e experiências digitais.
+                {% custom_trans "Uma visão completa do meu trabalho, incluindo aplicações web, sistemas e experiências digitais." %}
             </p>
         </div>
 
@@ -32,7 +32,7 @@
                     <div class="grid md:grid-cols-12 gap-8 items-start">
                         <div class="md:col-span-2">
                             <div class="text-sm text-gray-500 mb-2">{{ project.year }}</div>
-                            <div class="text-xs text-blue-600 font-medium mb-2">{{ project.get_status_display }}</div>
+                            <div class="text-xs text-blue-600 font-medium mb-2">{% project_status project %}</div>
                             {% if project.github_url %}
                             <a href="{{ project.github_url }}" target="_blank" class="inline-flex items-center text-xs text-gray-600 hover:text-gray-900 transition-colors">
                                 GitHub
@@ -45,10 +45,10 @@
                         
                         <div class="md:col-span-6">
                             <h3 class="text-2xl md:text-3xl font-light mb-4 group-hover:text-blue-600 transition-colors">
-                                {{ project.title }}
+                                {% project_title project %}
                             </h3>
                             <p class="text-gray-600 leading-relaxed mb-6">
-                                {{ project.description }}
+                                {% project_description project %}
                             </p>
                             <div class="flex flex-wrap gap-2">
                                 {% for tech in project.get_technologies_list %}
@@ -62,7 +62,7 @@
                         <div class="md:col-span-4 flex justify-end">
                             {% if project.project_url %}
                             <a href="{{ project.project_url }}" target="_blank" class="inline-flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors group">
-                                Ver Projeto
+                                {% custom_trans "Ver Projeto" %}
                                 <svg class="ml-1 w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
                                 </svg>
@@ -74,8 +74,8 @@
             </div>
             {% empty %}
             <div class="text-center text-gray-500 py-16">
-                <p class="text-xl">Nenhum projeto encontrado.</p>
-                <p class="mt-2">Adicione projetos no painel administrativo.</p>
+                <p class="text-xl">{% custom_trans "Nenhum projeto encontrado." %}</p>
+                <p class="mt-2">{% custom_trans "Adicione projetos no painel administrativo." %}</p>
             </div>
             {% endfor %}
         </div>
