@@ -192,17 +192,21 @@ def project_title(project):
 @register.simple_tag
 def project_description(project):
     """Retorna a descrição do projeto no idioma atual"""
-    current_language = get_language() or 'pt-br'
-    if current_language == 'en-us':
-        current_language = 'en'
-    
-    # Debug
-    print(f"[PROJECT_DESC] Idioma: {current_language}, Projeto: {project.title}")
-    print(f"[PROJECT_DESC] description_en: {project.description_en[:50] if project.description_en else 'None'}...")
-    
-    result = project.get_description(current_language)
-    print(f"[PROJECT_DESC] Resultado: {result[:50] if result else 'None'}...")
-    return result
+    try:
+        current_language = get_language() or 'pt-br'
+        if current_language == 'en-us':
+            current_language = 'en'
+        
+        if hasattr(project, 'get_description') and callable(project.get_description):
+            return project.get_description(current_language)
+        else:
+            # Fallback manual se método não existir
+            if current_language == 'en' and hasattr(project, 'description_en') and project.description_en:
+                return project.description_en
+            return project.description if hasattr(project, 'description') else ''
+    except Exception as e:
+        print(f"[ERROR] project_description: {e}")
+        return project.description if hasattr(project, 'description') else ''
 
 @register.simple_tag
 def project_status(project):
